@@ -5,7 +5,7 @@ const task = document.querySelector("#task");
 const required = document.querySelector("#required");
 
 task.addEventListener("keyup", () => {
-    if (task.value !== "") {
+    if (task.value.trim() !== "") {
         required.textContent = "";
     }
 });
@@ -15,7 +15,7 @@ const addTask = (event) => {
 
     const dueDate = document.querySelector("#due-date");
 
-    if (task.value === "") {
+    if (task.value.trim() === "") {
         required.textContent = "Required!";
     } else {
         let date = "";
@@ -29,7 +29,7 @@ const addTask = (event) => {
         }
 
         const taskDetails = {
-            taskDescription: task.value,
+            taskDescription: task.value.trim(),
             taskDueDate: date,
             completed: false,
             id: Math.floor(Math.random() * Date.now())

@@ -7,8 +7,20 @@ const required = document.querySelector("#required");
 task.addEventListener("keyup", () => {
     if (task.value.trim() !== "") {
         required.textContent = "";
+        task.focus();
     }
 });
+
+const renderTask = (taskDisplay) => {
+    const taskList = document.querySelector("#task-list");
+
+    const liElement = document.createElement("li");
+
+    liElement.setAttribute("data-key", taskDisplay.id);
+
+    liElement.innerHTML = `${taskDisplay.taskDescription} ${taskDisplay.taskDueDate}`;
+    taskList.append(liElement);
+};
 
 const addTask = (event) => {
     event.preventDefault();
@@ -17,6 +29,7 @@ const addTask = (event) => {
 
     if (task.value.trim() === "") {
         required.textContent = "Required!";
+        task.focus();
     } else {
         let date = "";
 
@@ -36,7 +49,7 @@ const addTask = (event) => {
         };
 
         tasksDetails.push(taskDetails);
-        // console.log(tasksDetails);
+        renderTask(taskDetails);
 
         task.value = "";
         dueDate.value = "";

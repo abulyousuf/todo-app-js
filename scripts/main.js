@@ -1,3 +1,5 @@
+let tasksDetails = [];
+
 const form = document.querySelector("#form");
 const task = document.querySelector("#task");
 const required = document.querySelector("#required");
@@ -12,7 +14,6 @@ const addTask = (event) => {
     event.preventDefault();
 
     const dueDate = document.querySelector("#due-date");
-    const taskList = document.querySelector("#task-list");
 
     if (task.value === "") {
         required.textContent = "Required!";
@@ -27,9 +28,19 @@ const addTask = (event) => {
             date = `${day}/${month}/${year}`;
         }
 
-        taskList.innerHTML += `<li><a href="#">${task.value} ${date}</a></li>`;
+        const taskDetails = {
+            taskDescription: task.value,
+            taskDueDate: date,
+            completed: false,
+            id: Math.floor(Math.random() * Date.now())
+        };
+
+        tasksDetails.push(taskDetails);
+        // console.log(tasksDetails);
+
         task.value = "";
         dueDate.value = "";
+        task.focus();
     }
 };
 

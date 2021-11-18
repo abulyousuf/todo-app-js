@@ -14,8 +14,11 @@ task.addEventListener("keyup", () => {
 const renderTask = (taskDisplay) => {
     const taskList = document.querySelector("#task-list");
 
+    const isCompleted = taskDisplay.completed ? "done" : "";
+
     const liElement = document.createElement("li");
 
+    liElement.setAttribute("class", `task ${isCompleted}`);
     liElement.setAttribute("data-key", taskDisplay.id);
 
     liElement.innerHTML = `${taskDisplay.taskDescription} ${taskDisplay.taskDueDate}`;

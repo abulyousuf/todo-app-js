@@ -1,63 +1,92 @@
-let tasksDetails = [];
+let allTasks = [];
+let taskID = "";
 
-const form = document.querySelector("#form");
-const task = document.querySelector("#task");
+const formInput = document.querySelector("#form-input");
+const taskInput = document.querySelector("#task-input");
 const required = document.querySelector("#required");
 
-task.addEventListener("keyup", () => {
-    if (task.value.trim() !== "") {
+taskInput.addEventListener("keyup", () => {
+    if (taskInput.value.trim() !== "") {
         required.textContent = "";
-        task.focus();
+        taskInput.focus();
     }
 });
 
-const renderTask = (taskDisplay) => {
-    const taskList = document.querySelector("#task-list");
+const renderTask = (todo) => {
+    const todoList = document.querySelector("#todo-list");
+    const task = document.querySelector(`[data-key="${todo.id}"]`);
 
-    const isCompleted = taskDisplay.completed ? "done" : "";
+    if (todo.deleted) {
+        task.remove();
+        return;
+    }
+
+    const isCompleted = todo.completed ? "done" : "";
 
     const liElement = document.createElement("li");
 
     liElement.setAttribute("class", `task ${isCompleted}`);
-    liElement.setAttribute("data-key", taskDisplay.id);
+    liElement.setAttribute("id", "open-modal");
 
-    liElement.innerHTML = `${taskDisplay.taskDescription} ${taskDisplay.taskDueDate}`;
-    taskList.append(liElement);
+    liElement.setAttribute("data-key", todo.id);
+
+    liElement.innerHTML = `<a href="#">${todo.taskDescription} ${todo.taskDueDate}</a>`;
+    todoList.append(liElement);
 };
 
-const addTask = (event) => {
+const addNewTask = (event) => {
     event.preventDefault();
 
-    const dueDate = document.querySelector("#due-date");
+    const dueDateInput = document.querySelector("#due-date-input");
 
-    if (task.value.trim() === "") {
+    if (taskInput.value.trim() === "") {
         required.textContent = "Required!";
-        task.focus();
+        taskInput.focus();
     } else {
         let date = "";
 
-        if (dueDate.value !== "") {
-            const year = dueDate.value.slice(0, 4);
-            const month = dueDate.value.slice(5, 7);
-            const day = dueDate.value.slice(8);
+        if (dueDateInput.value !== "") {
+            const year = dueDateInput.value.slice(0, 4);
+            const month = dueDateInput.value.slice(5, 7);
+            const day = dueDateInput.value.slice(8);
 
             date = `${day}/${month}/${year}`;
         }
 
-        const taskDetails = {
-            taskDescription: task.value.trim(),
+        const newTask = {
+            taskDescription: taskInput.value.trim(),
             taskDueDate: date,
             completed: false,
             id: Math.floor(Math.random() * Date.now())
         };
 
-        tasksDetails.push(taskDetails);
-        renderTask(taskDetails);
+        allTasks.push(newTask);
+        renderTask(newTask);
 
-        task.value = "";
-        dueDate.value = "";
-        task.focus();
+        taskInput.value = "";
+        dueDateInput.value = "";
+        taskInput.focus();
     }
 };
 
-form.addEventListener("submit", addTask);
+formInput.addEventListener("submit", addNewTask);
+
+document.querySelector("#todo-list").addEventListener("click", (event) => {
+    document.querySelector("#overlay").style.display = "block";
+    taskID = event.target.parentElement.dataset.key;
+});
+
+document.querySelector("#delete-btn").addEventListener("click", () => {
+    document.querySelector("#overlay").style.display = "none";
+
+    const index = allTasks.findIndex(task => task.id === Number(taskID));
+
+    const task = {
+        deleted: true,
+        ...allTasks[index]
+    };
+
+    allTasks = allTasks.filter(item => item.id !== Number(taskID));
+
+    renderTask(task);
+});

@@ -90,3 +90,13 @@ document.querySelector("#delete-btn").addEventListener("click", () => {
 
     renderTask(task);
 });
+
+document.querySelector("#complete-btn").addEventListener("click", () => {
+    document.querySelector("#overlay").style.display = "none";
+
+    const index = allTasks.findIndex(task => task.id === Number(taskID));
+
+    allTasks[index].completed = !allTasks[index].completed;
+
+    renderTask(allTasks[index]);
+});

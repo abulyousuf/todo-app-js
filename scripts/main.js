@@ -25,13 +25,23 @@ const renderTask = (todo) => {
 
     const liElement = document.createElement("li");
 
-    liElement.setAttribute("class", `task ${isCompleted}`);
+    // need to fix todo-task class
+
+    liElement.setAttribute("class", `todo-task ${isCompleted}`);
     liElement.setAttribute("id", "open-modal");
 
     liElement.setAttribute("data-key", todo.id);
 
     liElement.innerHTML = `<a href="#">${todo.taskDescription} ${todo.taskDueDate}</a>`;
-    todoList.append(liElement);
+
+    if (task) {
+        task.remove();
+
+        const doneList = document.querySelector("#done-list");
+        doneList.append(liElement);
+    } else {
+        todoList.append(liElement);
+    }
 };
 
 const addNewTask = (event) => {

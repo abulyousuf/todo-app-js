@@ -6,6 +6,8 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Todo App</title>
+    <!-- favicon icon -->
+    <link rel="icon" type="image/png" sizes="24x24" href="./images/todo-list.png">
     <!-- google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,24 +18,33 @@
 <body>
     <h1>Todo App</h1>
 
-    <form action="" autocomplete="off" id="form">
-        <div>
-            <label for="task">Task:</label>
-            <input type="text" id="task" name="task">
-            <p id="required" class="error"></p>
+    <div id="overlay">
+        <div id="modal">
+            <h2>Delete the Task?</h2>
+            <button id="delete-btn">Delete</button>
         </div>
-        
-        <div>
-            <label for="due-date">Due date:</label>
-            <input type="date" id="due-date" name="due-date">
-        </div>
+    </div>
 
-        <input type="submit" value="Add Task">
-    </form>
+    <div class="container">
+        <form action="" autocomplete="off" id="form-input">
+            <div>
+                <label for="task-input">Task:</label>
+                <input type="text" id="task-input" name="task-input">
+                <p id="required" class="error-message"></p>
+            </div>
 
-    <div class="separator"></div>
+            <div>
+                <label for="due-date-input">Due date:</label>
+                <input type="date" id="due-date-input" name="due-date-input">
+            </div>
 
-    <ul id="task-list"></ul>
+            <input type="submit" value="Add Task">
+        </form>
+
+        <div class="separator-line"></div>
+
+        <ul id="todo-list"></ul>
+    </div>
 
     <!-- scripts -->
     <script src="./scripts/main.js"></script>

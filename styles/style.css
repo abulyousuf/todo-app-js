@@ -128,3 +128,7 @@ ul li:hover {
     padding: 8px 15px;
     cursor: pointer;
 }
+
+#delete-btn {
+    background: #ff0000;
+}

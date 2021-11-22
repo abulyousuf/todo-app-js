@@ -108,5 +108,20 @@ document.querySelector("#complete-btn").addEventListener("click", () => {
 
     allTasks[index].completed = !allTasks[index].completed;
 
+    const dateObj = new Date();
+    let date = dateObj.getDate();
+    let month = dateObj.getMonth() + 1;
+    const year = dateObj.getFullYear();
+
+    if (date >= 1 && date < 10) {
+        date = "0" + date;
+    }
+
+    if (month >= 1 && month < 10) {
+        month = "0" + month;
+    }
+
+    allTasks[index].taskDueDate = `${date}/${month}/${year}`;
+
     renderTask(allTasks[index]);
 });

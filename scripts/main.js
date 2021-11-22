@@ -32,7 +32,7 @@ const renderTask = (todo) => {
 
     liElement.setAttribute("data-key", todo.id);
 
-    liElement.innerHTML = `<a href="#">${todo.taskDescription} ${todo.taskDueDate}</a>`;
+    liElement.innerHTML = `<a href="#">${todo.taskDescription} <span>${todo.taskDueDate}</span></a>`;
 
     if (task) {
         task.remove();
@@ -120,6 +120,8 @@ document.querySelector("#complete-btn").addEventListener("click", () => {
     if (month >= 1 && month < 10) {
         month = "0" + month;
     }
+
+    // here i am using taskDueDate as taskCompletedDate
 
     allTasks[index].taskDueDate = `${date}/${month}/${year}`;
 
